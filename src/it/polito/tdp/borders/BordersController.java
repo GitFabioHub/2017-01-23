@@ -6,6 +6,8 @@ package it.polito.tdp.borders;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.borders.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -14,6 +16,7 @@ import javafx.scene.control.TextField;
 
 public class BordersController {
 
+	private Model model;
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -31,6 +34,15 @@ public class BordersController {
 
     @FXML
     void doCalcolaConfini(ActionEvent event) {
+    	txtResult.clear();
+    	try {
+        	int anno=Integer.parseInt(txtAnno.getText());
+        	this.model.creaGrafo(anno);
+        	txtResult.appendText(String.format("GRAFO CREATO!!\n #%d Vertici e #%d Archi", this.model.numeroVertici(),this.model.numeroArchi()));
+
+    	}catch(NumberFormatException e) {
+    		txtResult.appendText("INSERISCI UN NUMERO");
+    	}
 
     }
 
@@ -46,4 +58,7 @@ public class BordersController {
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Borders.fxml'.";
 
     }
+    public void setModel(Model model) {
+		this.model = model;
+	}
 }
